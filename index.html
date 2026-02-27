@@ -46,56 +46,47 @@
       border-bottom: 1px solid rgba(0,0,0,0.06);
     }
     .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-    .nav-mark {
-      width: 30px;
-      height: 30px;
-      background: var(--dark);
-      border-radius: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
       font-weight: 900;
-      font-size: 17px;
-      color: white;
-      letter-spacing: -1px;
+      letter-spacing: -0.03em;
+      color: var(--dark);
+      text-decoration: none;
       flex-shrink: 0;
     }
-    .nav-wordmark {
+    .nav-links {
       display: flex;
-      flex-direction: column;
-      line-height: 1;
+      align-items: center;
+      gap: 1.75rem;
     }
-    .nav-wordmark-top {
-      font-size: 0.95rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--dark); }
+    .nav-links a.active {
       color: var(--dark);
-    }
-    .nav-wordmark-sub {
-      font-size: 0.6rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted-light);
     }
     .nav-cta {
-      background: var(--accent);
+      background: var(--dark);
       color: #fff;
-      padding: 0.45rem 0.9rem;
+      padding: 0.5rem 1.1rem;
       border-radius: 7px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 600;
       text-decoration: none;
       transition: background 0.15s;
       white-space: nowrap;
+      flex-shrink: 0;
     }
     .nav-cta:hover { background: #1c1f2a; }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+    }
 
     /* ─── HERO ─── */
     .hero {
