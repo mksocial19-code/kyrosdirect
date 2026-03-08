@@ -405,6 +405,22 @@
       .proof-bar { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; padding: 1.5rem; }
       .cta-card { padding: 2.5rem 1.5rem; }
       footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+
+      /* Mobile: hide add-on cards from pricing section (they show in modal) */
+      .pricing-addons { display: none; }
+
+      /* Mobile: tighten section padding */
+      .section { padding: 64px 1.25rem; }
+
+      /* Mobile: contact band 1 column */
+      #contact > div > div { grid-template-columns: 1fr !important; gap: 1.25rem !important; }
+
+      /* Mobile: DGS card full width */
+      #growth-system .pricing-card { max-width: 100% !important; }
+
+      /* Mobile: modal full screen, scrollable */
+      #addon-modal > div { border-radius: 16px 16px 0 0 !important; padding: 2rem 1.25rem 1.5rem !important; max-height: 90vh; overflow-y: auto; }
+      #addon-modal > div > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
     }
   </style>
 </head>
