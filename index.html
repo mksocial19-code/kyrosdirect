@@ -474,7 +474,7 @@
             <li>Fill out one form. We handle the rest.</li>
             <li>One-time payment. No contracts. No extra fees.</li>
           </ul>
-          <a href="#contact" class="btn btn-white-outline" style="background:#fff;color:#0f1117;border-color:#fff;font-weight:700;">Get Started &rarr;</a>
+          <a href="#" id="start-checkout-btn" class="btn btn-white-outline" style="background:#fff;color:#0f1117;border-color:#fff;font-weight:700;">Start Checkout &rarr;</a>
         </div>
         <div class="pricing-addons">
           <p class="pricing-addon-label">Add-Ons</p>
@@ -529,7 +529,7 @@
           <li>Launch document: credentials, quick-start guide, and key contacts in one place</li>
           <li>Priority build queue</li>
         </ul>
-        <a href="https://calendly.com/mark-outreach/15" target="_blank" class="btn-white-solid" style="margin-top:8px;display:block;text-align:center;">Get Started &rarr;</a>
+        <a href="https://calendly.com/mark-outreach/15" target="_blank" class="btn-white-solid" style="margin-top:8px;display:block;text-align:center;">See If You Qualify &rarr;</a>
       </div>
     </div>
   </section>
@@ -569,6 +569,79 @@
     <span>© 2026 Kyros Co</span>
     <span>kyrosdirect.com</span>
   </footer>
+
+
+<!-- ADD-ON MODAL -->
+<div id="addon-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);align-items:flex-end;justify-content:center;">
+  <div style="background:#fff;border-radius:20px 20px 0 0;padding:2.5rem 2rem 2rem;width:100%;max-width:760px;box-shadow:0 -8px 48px rgba(0,0,0,0.2);animation:slideUp 0.25s ease;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+      <div>
+        <p style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#2563eb;margin-bottom:4px;">Optional Add-ons</p>
+        <h3 style="font-size:1.25rem;font-weight:800;letter-spacing:-0.02em;color:#0f1117;">Upgrade your package</h3>
+      </div>
+      <button id="close-modal" style="background:none;border:none;cursor:pointer;font-size:1.4rem;color:#9ca3af;line-height:1;">×</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+      <!-- AI Chatbot -->
+      <div id="addon-chatbot" class="addon-toggle-card" onclick="toggleAddon('chatbot')" style="border:2px solid #e5e7eb;border-radius:12px;padding:1.25rem;cursor:pointer;transition:all 0.15s;user-select:none;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+          <span style="font-size:1.1rem;font-weight:800;color:#0f1117;">+$2,500</span>
+          <span id="chatbot-check" style="width:22px;height:22px;border-radius:50%;border:2px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0;transition:all 0.15s;"></span>
+        </div>
+        <p style="font-size:0.9rem;font-weight:700;color:#0f1117;margin-bottom:4px;">AI Chatbot</p>
+        <p style="font-size:0.8rem;color:#6b7280;line-height:1.5;">Captures leads 24/7. Answers questions instantly. Never misses an inquiry.</p>
+      </div>
+      <!-- SEO -->
+      <div id="addon-seo" class="addon-toggle-card" onclick="toggleAddon('seo')" style="border:2px solid #e5e7eb;border-radius:12px;padding:1.25rem;cursor:pointer;transition:all 0.15s;user-select:none;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+          <span style="font-size:1.1rem;font-weight:800;color:#0f1117;">+$2,500</span>
+          <span id="seo-check" style="width:22px;height:22px;border-radius:50%;border:2px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0;transition:all 0.15s;"></span>
+        </div>
+        <p style="font-size:0.9rem;font-weight:700;color:#0f1117;margin-bottom:4px;">Local SEO</p>
+        <p style="font-size:0.8rem;color:#6b7280;line-height:1.5;">Get found on Google. Local rankings, directory submissions, schema markup.</p>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <p style="font-size:0.9rem;color:#6b7280;">Total: <strong id="modal-total" style="color:#0f1117;font-weight:800;">$5,000</strong></p>
+      <a id="modal-checkout-btn" href="https://calendly.com/mark-outreach/15" target="_blank" class="btn btn-primary" style="margin:0;">Continue to Checkout &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .addon-toggle-card:hover { border-color: #2563eb !important; }
+  .addon-toggle-card.selected { border-color: #2563eb !important; background: #eff6ff; }
+  .addon-toggle-card.selected span[id$="-check"] { background: #2563eb !important; border-color: #2563eb !important; color: #fff !important; }
+</style>
+
+<script>
+  const addons = { chatbot: false, seo: false };
+  function toggleAddon(key) {
+    addons[key] = !addons[key];
+    const card = document.getElementById('addon-' + key);
+    const check = document.getElementById(key + '-check');
+    card.classList.toggle('selected', addons[key]);
+    check.textContent = addons[key] ? '✓' : '';
+    updateTotal();
+  }
+  function updateTotal() {
+    const base = 5000;
+    const extra = (addons.chatbot ? 2500 : 0) + (addons.seo ? 2500 : 0);
+    document.getElementById('modal-total').textContent = '$' + (base + extra).toLocaleString();
+  }
+  document.getElementById('start-checkout-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    const modal = document.getElementById('addon-modal');
+    modal.style.display = 'flex';
+  });
+  document.getElementById('close-modal').addEventListener('click', function() {
+    document.getElementById('addon-modal').style.display = 'none';
+  });
+  document.getElementById('addon-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+  });
+</script>
 
 </body>
 </html>
