@@ -424,10 +424,15 @@
       #contact > div > div a { font-size: 0.7rem !important; white-space: nowrap; }
       #contact > div > div p { font-size: 0.55rem !important; }
 
-      /* Mobile: modal bottom sheet */
+      /* Mobile: modal bottom sheet — keep cards side by side */
       #addon-modal { padding: 0 !important; align-items: flex-end !important; }
-      #addon-modal > div { border-radius: 20px 20px 0 0 !important; padding: 2rem 1.25rem 1.5rem !important; max-height: 90vh; overflow-y: auto; }
-      #addon-modal > div > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+      #addon-modal > div { border-radius: 20px 20px 0 0 !important; padding: 1.5rem 1rem 1.25rem !important; max-height: 90vh; overflow-y: auto; }
+      #addon-modal > div > div[style*="grid-template-columns"] { grid-template-columns: 1fr 1fr !important; gap: 0.75rem !important; }
+      #addon-modal .addon-toggle-card { padding: 1rem !important; }
+      #addon-modal .addon-toggle-card span:first-child { font-size: 1.25rem !important; }
+      #addon-modal .addon-toggle-card p:nth-child(2) { font-size: 0.9rem !important; }
+      #addon-modal .addon-toggle-card p:nth-child(3) { font-size: 0.75rem !important; }
+      #addon-modal ul li { font-size: 0.75rem !important; }
     }
   </style>
 </head>
