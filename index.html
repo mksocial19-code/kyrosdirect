@@ -572,38 +572,38 @@
 
 
 <!-- ADD-ON MODAL -->
-<div id="addon-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);align-items:flex-end;justify-content:center;">
-  <div style="background:#fff;border-radius:24px 24px 0 0;padding:3rem 2.5rem 2.5rem;width:100%;max-width:860px;box-shadow:0 -12px 60px rgba(0,0,0,0.25);animation:slideUp 0.25s ease;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;">
+<div id="addon-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:24px;padding:3rem 2.5rem;width:calc(100% - 3rem);max-width:860px;box-shadow:0 24px 80px rgba(0,0,0,0.3);animation:slideUp 0.25s ease;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;">
       <div>
-        <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#2563eb;margin-bottom:6px;">Optional Add-ons</p>
-        <h3 style="font-size:1.75rem;font-weight:800;letter-spacing:-0.03em;color:#0f1117;line-height:1.1;">Upgrade your package</h3>
+        <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#2563eb;margin-bottom:8px;">Recommended Add-ons</p>
+        <h3 style="font-size:2rem;font-weight:800;letter-spacing:-0.03em;color:#0f1117;line-height:1.1;">Upgrade your package</h3>
       </div>
-      <button id="close-modal" style="background:#f3f4f6;border:none;cursor:pointer;font-size:1.25rem;color:#6b7280;line-height:1;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;">×</button>
+      <button id="close-modal" style="background:#f3f4f6;border:none;cursor:pointer;font-size:1.25rem;color:#6b7280;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1rem;">×</button>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:2rem;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2.5rem;">
       <!-- AI Chatbot -->
-      <div id="addon-chatbot" class="addon-toggle-card" onclick="toggleAddon('chatbot')" style="border:2px solid #e5e7eb;border-radius:16px;padding:1.75rem;cursor:pointer;transition:all 0.15s;user-select:none;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
-          <span style="font-size:1.75rem;font-weight:900;color:#0f1117;letter-spacing:-0.03em;">+$2,500</span>
-          <span id="chatbot-check" style="width:26px;height:26px;border-radius:50%;border:2px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;transition:all 0.15s;"></span>
+      <div id="addon-chatbot" class="addon-toggle-card" onclick="toggleAddon('chatbot')" style="border:2px solid #e5e7eb;border-radius:16px;padding:2rem;cursor:pointer;transition:all 0.15s;user-select:none;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+          <span style="font-size:2rem;font-weight:900;color:#0f1117;letter-spacing:-0.03em;">+$2,500</span>
+          <span id="chatbot-check" style="width:28px;height:28px;border-radius:50%;border:2px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;transition:all 0.15s;margin-top:4px;"></span>
         </div>
-        <p style="font-size:1.1rem;font-weight:700;color:#0f1117;margin-bottom:6px;">AI Chatbot</p>
-        <p style="font-size:0.9375rem;color:#6b7280;line-height:1.5;">Captures leads 24/7. Answers questions instantly. Never misses an inquiry.</p>
+        <p style="font-size:1.2rem;font-weight:700;color:#0f1117;margin-bottom:8px;">AI Chatbot</p>
+        <p style="font-size:1rem;color:#6b7280;line-height:1.55;">Captures leads 24/7. Answers questions instantly. Never misses an inquiry.</p>
       </div>
       <!-- SEO -->
-      <div id="addon-seo" class="addon-toggle-card" onclick="toggleAddon('seo')" style="border:2px solid #e5e7eb;border-radius:16px;padding:1.75rem;cursor:pointer;transition:all 0.15s;user-select:none;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
-          <span style="font-size:1.75rem;font-weight:900;color:#0f1117;letter-spacing:-0.03em;">+$2,500</span>
-          <span id="seo-check" style="width:26px;height:26px;border-radius:50%;border:2px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;transition:all 0.15s;"></span>
+      <div id="addon-seo" class="addon-toggle-card" onclick="toggleAddon('seo')" style="border:2px solid #e5e7eb;border-radius:16px;padding:2rem;cursor:pointer;transition:all 0.15s;user-select:none;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+          <span style="font-size:2rem;font-weight:900;color:#0f1117;letter-spacing:-0.03em;">+$2,500</span>
+          <span id="seo-check" style="width:28px;height:28px;border-radius:50%;border:2px solid #e5e7eb;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;transition:all 0.15s;margin-top:4px;"></span>
         </div>
-        <p style="font-size:1.1rem;font-weight:700;color:#0f1117;margin-bottom:6px;">Local SEO</p>
-        <p style="font-size:0.9375rem;color:#6b7280;line-height:1.5;">Get found on Google. Local rankings, directory submissions, schema markup.</p>
+        <p style="font-size:1.2rem;font-weight:700;color:#0f1117;margin-bottom:8px;">Local SEO</p>
+        <p style="font-size:1rem;color:#6b7280;line-height:1.55;">Get found on Google. Local rankings, directory submissions, schema markup.</p>
       </div>
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;">
-      <p style="font-size:1rem;color:#6b7280;">Total: <strong id="modal-total" style="color:#0f1117;font-weight:900;font-size:1.25rem;">$5,000</strong></p>
-      <a id="modal-checkout-btn" href="https://calendly.com/mark-outreach/15" target="_blank" class="btn btn-primary" style="margin:0;font-size:1rem;padding:0.9rem 2rem;">Continue to Checkout &rarr;</a>
+      <p style="font-size:1rem;color:#6b7280;">Total: <strong id="modal-total" style="color:#0f1117;font-weight:900;font-size:1.5rem;">$5,000</strong></p>
+      <a id="modal-checkout-btn" href="https://calendly.com/mark-outreach/15" target="_blank" class="btn btn-primary" style="margin:0;font-size:1rem;padding:1rem 2.25rem;">Continue to Checkout &rarr;</a>
     </div>
   </div>
 </div>
