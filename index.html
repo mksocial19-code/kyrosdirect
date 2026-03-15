@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Inter',sans-serif; overflow:hidden; background:#000; color:white; }
+body { font-family:'Inter',sans-serif; overflow:hidden; background:#000; color:white; -webkit-overflow-scrolling:touch; }
 
 canvas { position:fixed; inset:0; z-index:0; }
 
@@ -180,7 +180,7 @@ function drawRibbon(r, offset) {
 
   ctx.beginPath();
 
-  const STEPS = 200;
+  const STEPS = W < 768 ? 80 : 200;
   // Top edge of ribbon
   for (let i = 0; i <= STEPS; i++) {
     const x = (i / STEPS) * W;
@@ -248,7 +248,17 @@ function draw() {
   requestAnimationFrame(draw);
 }
 
-window.addEventListener('resize', resize);
+// Mobile Safari: restart loop on visibility change
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) { t = t; requestAnimationFrame(draw); }
+});
+
+// Touch: wake canvas on first touch (iOS power saving)
+document.addEventListener('touchstart', () => {
+  requestAnimationFrame(draw);
+}, { once: false, passive: true });
+
+window.addEventListener('resize', () => { resize(); });
 resize();
 draw();
 </script>
