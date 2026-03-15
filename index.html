@@ -34,6 +34,11 @@ nav {
 }
 .nav-cta:hover { background:rgba(255,255,255,0.18); }
 
+@media (max-width: 768px) {
+  nav { padding:16px 20px; }
+  .nav-links { display:none; }
+}
+
 .hero {
   position:relative; width:100vw; height:100vh;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -69,6 +74,15 @@ h1 {
   letter-spacing:-4.5px; color:white;
   max-width:920px; margin-bottom:22px;
   animation: fadeUp 0.7s 0.3s ease both; opacity:0;
+}
+
+@media (max-width: 768px) {
+  h1 { font-size:52px; letter-spacing:-2.5px; line-height:1.0; }
+  .sub { font-size:15px; }
+  .badges { gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:28px; }
+  .badge { font-size:11px; padding:6px 12px; }
+  .content { padding:0 20px; }
+  .btns .btn-primary { font-size:14px; padding:13px 24px; }
 }
 h1 em {
   background:linear-gradient(90deg,#0066ff,#00d4ff);
