@@ -7,9 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Inter',sans-serif; background:#07091a; color:white; }
+body { font-family:'Inter',sans-serif; background:#000005; color:white; }
 
-canvas { position:fixed; inset:0; z-index:0; }
+canvas { position:fixed; inset:0; z-index:0; opacity:1; transition:opacity 0.5s; }
 
 nav {
  position:fixed; top:0; left:0; right:0; z-index:20;
@@ -53,7 +53,7 @@ nav {
  content:'';
  position:absolute; bottom:0; left:0; right:0;
  height:220px;
- background:linear-gradient(to bottom, transparent, #07091a);
+ background:linear-gradient(to bottom, transparent, #000005);
  z-index:2; pointer-events:none;
 }
 
@@ -337,7 +337,7 @@ footer {
 </style>
 </head>
 <body>
-<canvas id="c" style="display:none;"></canvas>
+<canvas id="c"></canvas>
 
 <nav>
  <div class="logo"><span class="logo-k">K</span></div>
@@ -527,9 +527,8 @@ footer {
 </footer>
 
 <script>
-// Canvas animation disabled — replaced by video background
 const canvas = document.getElementById('c');
-if (false && canvas) {
+if (canvas) {
 const ctx = canvas.getContext('2d');
 let W, H, t = 0;
 
@@ -639,7 +638,20 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
  }
  });
 });
-} // end disabled canvas block
+} // end canvas block
+
+// Scroll-based: hide canvas when at top (video shows), reveal as you scroll down
+window.addEventListener('scroll', () => {
+  const heroH = window.innerHeight;
+  const scrollY = window.scrollY;
+  const progress = Math.min(scrollY / (heroH * 0.6), 1);
+  canvas.style.opacity = progress;
+  // Also fade out the hero video as you scroll
+  const heroVideo = document.querySelector('.hero video');
+  if (heroVideo) heroVideo.style.opacity = Math.max(0.6 - progress * 0.6, 0);
+});
+// Start with canvas hidden (video shows on load)
+canvas.style.opacity = 0;
 </script>
 </body>
 </html>
