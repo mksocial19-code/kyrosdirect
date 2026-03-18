@@ -1,0 +1,9 @@
+demos/
+research/
+AGENTS.md
+README.md
+kyros-hero-animated.html
+wrangler.jsonc
+.assetsignore
+.git/
+node_modules/
