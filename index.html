@@ -672,6 +672,8 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 (function() {
   const hero = document.querySelector('.hero');
   const firstSection = document.querySelector('section');
+  const pricingHeader = document.querySelector('.pricing-header');
+  const snapTarget = pricingHeader || firstSection;
   if (!hero || !firstSection) return;
 
   let snapping = false;
@@ -679,7 +681,8 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
   function snapTo(el) {
     if (snapping) return;
     snapping = true;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top, behavior: 'smooth' });
     setTimeout(() => { snapping = false; }, 800);
   }
 
@@ -689,7 +692,7 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
     // If in hero and scrolling down — snap to first section
     if (scrollY < heroH * 0.5 && e.deltaY > 0) {
       e.preventDefault();
-      snapTo(firstSection);
+      snapTo(snapTarget);
     }
     // If in first section near top and scrolling up — snap back to hero
     if (scrollY >= heroH * 0.5 && scrollY < heroH * 1.5 && e.deltaY < 0) {
@@ -705,7 +708,7 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
     const delta = touchStartY - e.changedTouches[0].clientY;
     const scrollY = window.scrollY;
     const heroH = hero.offsetHeight;
-    if (scrollY < heroH * 0.5 && delta > 30) snapTo(firstSection);
+    if (scrollY < heroH * 0.5 && delta > 30) snapTo(snapTarget);
     if (scrollY >= heroH * 0.5 && scrollY < heroH * 1.5 && delta < -30) snapTo(hero);
   }, { passive: true });
 })();
