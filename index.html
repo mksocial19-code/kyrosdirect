@@ -9,11 +9,11 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Inter',sans-serif; background:#000005; color:white; }
 
-#wave-bg { display:none; }
 #c {
- position:absolute; inset:0;
- width:100%; height:100%;
+ position:fixed; inset:0;
+ width:100vw; height:100vh;
  z-index:0; pointer-events:none;
+ opacity:0; transition:opacity 0.4s;
 }
 
 nav {
@@ -217,11 +217,11 @@ section {
  font-size:36px; font-weight:800; letter-spacing:-0.03em; color:white;
 }
 /* Core offer card - bigger */
-.core-card { padding:44px; }
-.core-card .card-price { font-size:64px; }
-.core-card .card-name { font-size:24px; }
-.core-card .card-desc { font-size:16px; color:#fff; }
-.core-card .card-features li { font-size:15px; color:#fff; }
+.core-card { padding:32px 36px; }
+.core-card .card-price { font-size:52px; }
+.core-card .card-name { font-size:20px; }
+.core-card .card-desc { font-size:14px; color:#fff; }
+.core-card .card-features li { font-size:13px; color:#fff; }
 .card-price-sub {
  font-size:13px; color:rgba(255,255,255,0.35); font-weight:400; margin-left:4px;
 }
@@ -422,6 +422,7 @@ footer {
 <body>
 <canvas id="c"></canvas>
 
+<canvas id="c"></canvas>
 <nav>
  <div class="logo"><span class="logo-k">K</span></div>
  <div class="nav-links">
@@ -618,9 +619,8 @@ const ctx = canvas.getContext('2d');
 let W, H, t = 0;
 
 function resize() {
- const parent = canvas.parentElement;
- W = canvas.width = parent ? parent.offsetWidth : window.innerWidth;
- H = canvas.height = parent ? parent.offsetHeight : window.innerHeight;
+ W = canvas.width = window.innerWidth;
+ H = canvas.height = window.innerHeight;
 }
 
 const RIBBONS = [
@@ -726,7 +726,13 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 });
 } // end canvas block
 
-// Canvas is section-scoped — no crossfade needed
+// Show canvas when scrolled past hero, hide when in hero
+function updateCanvasVisibility() {
+ const heroH = document.querySelector('.hero') ? document.querySelector('.hero').offsetHeight : window.innerHeight;
+ canvas.style.opacity = window.scrollY > heroH * 0.8 ? '1' : '0';
+}
+window.addEventListener('scroll', updateCanvasVisibility, { passive: true });
+updateCanvasVisibility();
 
 // Snap scroll: hero ↔ first section via wheel + touch
 const heroEl = document.querySelector('.hero');
