@@ -337,17 +337,25 @@ section {
 
 /* ── Contact ── */
 .contact-grid {
- display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:28px;
+ display:grid; grid-template-columns:repeat(3,1fr);
+ margin-top:0;
+ border-top:1px solid rgba(255,255,255,0.08);
 }
-.contact-card { text-align:center; padding:28px 20px; }
+.contact-card {
+ text-align:center; padding:40px 20px;
+ border-right:1px solid rgba(255,255,255,0.08);
+}
+.contact-card:last-child { border-right:none; }
 .contact-card-title {
- font-size:15px; font-weight:700; color:white; margin-bottom:10px; letter-spacing:-0.03em;
+ font-size:11px; font-weight:600; letter-spacing:0.1em;
+ text-transform:uppercase; color:rgba(255,255,255,0.3);
+ margin-bottom:10px;
 }
 .contact-card a {
- font-size:14px; color:rgba(255,255,255,0.5); text-decoration:none;
- transition:color 0.2s;
+ font-size:16px; font-weight:600; color:white; text-decoration:none;
+ letter-spacing:-0.02em; transition:color 0.2s;
 }
-.contact-card a:hover { color:white; }
+.contact-card a:hover { color:rgba(0,180,255,1); }
 
 /* ── Footer ── */
 footer {
@@ -369,6 +377,8 @@ footer {
  .addons-column { display:none; }
  .dgs-grid { grid-template-columns:1fr; }
  .contact-grid { grid-template-columns:1fr; }
+ .contact-card { border-right:none; border-bottom:1px solid rgba(255,255,255,0.08); padding:28px 20px; }
+ .contact-card:last-child { border-bottom:none; }
  .section-headline { font-size:28px; }
  footer { padding:20px; flex-direction:column; gap:8px; text-align:center; }
 }
@@ -609,17 +619,16 @@ footer {
 <!-- Contact -->
 <section>
  <div class="section-inner">
- <div class="section-headline" style="text-align:center;">Let's talk through the right fit.</div>
  <div class="contact-grid">
-  <div class="glass-card contact-card">
+  <div class="contact-card">
   <div class="contact-card-title">Book a Call</div>
   <a href="https://calendly.com/mark-outreach/15" target="_blank">Schedule Now</a>
   </div>
-  <div class="glass-card contact-card">
+  <div class="contact-card">
   <div class="contact-card-title">Email</div>
-  <a href="mailto:info@kyrosdirect.com">info@kyrosdirect.com</a>
+  <a href="mailto:hello@kyrosdirect.com">hello@kyrosdirect.com</a>
   </div>
-  <div class="glass-card contact-card">
+  <div class="contact-card">
   <div class="contact-card-title">Phone</div>
   <a href="tel:8038666366">(803) 866-6366</a>
   </div>
