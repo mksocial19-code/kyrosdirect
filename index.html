@@ -372,12 +372,10 @@ footer {
  }
  .checkout-overlay.open { display:flex; }
  .checkout-modal {
-  background:#0a0a14; border:1px solid rgba(255,255,255,0.1);
-  border-radius:20px 20px 0 0; padding:28px 20px 40px;
+  background:#060612; border:1px solid rgba(255,255,255,0.08);
+  border-radius:20px 20px 0 0; padding:28px 20px 44px;
   width:100%; max-height:85vh; overflow-y:auto;
  }
- .checkout-modal h3 { font-size:18px; font-weight:700; margin-bottom:4px; }
- .checkout-modal .modal-sub { font-size:13px; color:rgba(255,255,255,0.4); margin-bottom:20px; }
  .modal-addons { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
  .modal-addon-card {
   background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
@@ -755,8 +753,7 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 <div class="checkout-overlay" id="checkoutModal">
  <div class="checkout-modal">
   <button class="modal-close-btn" id="closeModal">✕</button>
-  <h3>Build Your Package</h3>
-  <p class="modal-sub">Select any add-ons below</p>
+  <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#0099ff;margin-bottom:8px;">Recommended Add-Ons</div>
   <div class="modal-addons">
    <div class="modal-addon-card" data-price="2500" id="addon-chatbot">
     <div class="modal-addon-price">+$2,500</div>
