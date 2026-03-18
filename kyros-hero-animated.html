@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kyros — Live</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',sans-serif; overflow:hidden; background:#000; color:white; }
+
+canvas { position:fixed; inset:0; z-index:0; }
+
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:20;
+  padding:18px 48px;
+  display:flex; align-items:center; justify-content:space-between;
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  background:rgba(0,0,0,0.35);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.logo { font-size:20px; font-weight:700; letter-spacing:-0.5px; color:white; }
+.logo span { background:linear-gradient(90deg,#0066ff,#00d4ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.nav-links { display:flex; gap:2px; }
+.nav-link { color:rgba(255,255,255,0.55); font-size:14px; font-weight:500; padding:7px 14px; border-radius:6px; transition:color 0.2s; }
+.nav-link:hover { color:white; }
+.nav-link.active { color:white; }
+.nav-cta {
+  background:rgba(255,255,255,0.1); color:white; font-size:13px; font-weight:600;
+  padding:8px 18px; border-radius:8px;
+  border:1px solid rgba(255,255,255,0.2);
+  backdrop-filter:blur(8px); cursor:pointer; font-family:'Inter',sans-serif;
+  transition:background 0.2s;
+}
+.nav-cta:hover { background:rgba(255,255,255,0.18); }
+
+.hero {
+  position:relative; width:100vw; height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+
+.content {
+  position:relative; z-index:10;
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  padding:0 24px;
+}
+
+.badges {
+  display:flex; gap:10px; margin-bottom:38px;
+}
+.badge {
+  display:flex; align-items:center; gap:7px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:7px 16px; border-radius:9999px;
+  font-size:12px; color:rgba(255,255,255,0.65); font-weight:500;
+  animation: fadeUp 0.6s ease both;
+}
+.badge:nth-child(1) { animation-delay:0.1s; }
+.badge:nth-child(2) { animation-delay:0.2s; }
+.badge:nth-child(3) { animation-delay:0.3s; }
+.badge-dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+.badge-dot.blue { background:linear-gradient(135deg,#0066ff,#00d4ff); }
+
+h1 {
+  font-size:86px; font-weight:800; line-height:0.95;
+  letter-spacing:-4.5px; color:white;
+  max-width:920px; margin-bottom:22px;
+  animation: fadeUp 0.7s 0.3s ease both; opacity:0;
+}
+h1 em {
+  background:linear-gradient(90deg,#0066ff,#00d4ff);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-style:normal;
+}
+
+.sub {
+  color:rgba(255,255,255,0.4); font-size:17px; font-weight:400;
+  max-width:440px; line-height:1.7; margin-bottom:42px;
+  animation: fadeUp 0.7s 0.45s ease both; opacity:0;
+}
+
+.btns {
+  display:flex; gap:14px; align-items:center;
+  animation: fadeUp 0.7s 0.6s ease both; opacity:0;
+}
+.btn-primary {
+  background:#000; color:white; font-weight:600; font-size:15px;
+  padding:14px 30px; border-radius:9999px;
+  border:1px solid rgba(255,255,255,0.22);
+  cursor:pointer; font-family:'Inter',sans-serif;
+  transition:border-color 0.25s, box-shadow 0.25s;
+}
+.btn-primary:hover { border-color:rgba(0,180,255,0.5); box-shadow:0 0 20px rgba(0,100,255,0.2); }
+.btn-glass {
+  background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.7); font-weight:500; font-size:15px;
+  padding:14px 30px; border-radius:9999px;
+  border:1px solid rgba(255,255,255,0.1);
+  backdrop-filter:blur(12px); cursor:pointer; font-family:'Inter',sans-serif;
+  transition:background 0.2s, color 0.2s;
+}
+.btn-glass:hover { background:rgba(255,255,255,0.1); color:white; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<nav>
+  <div class="logo">Kyros<span>.</span></div>
+  <div class="nav-links">
+    <span class="nav-link active">Work</span>
+    <span class="nav-link">Services</span>
+    <span class="nav-link">Pricing</span>
+    <span class="nav-link">About</span>
+  </div>
+  <button class="nav-cta">Book a Call →</button>
+</nav>
+
+<div class="hero">
+  <div class="content">
+    <div class="badges">
+      <div class="badge"><span class="badge-dot blue"></span>Custom Code</div>
+      <div class="badge"><span class="badge-dot blue"></span>One-Time Payment</div>
+      <div class="badge"><span class="badge-dot blue"></span>Full Ownership</div>
+    </div>
+    <h1>Websites That <em>Win</em><br>You Clients</h1>
+    <p class="sub">A custom website built for your business. No templates. No subscriptions. Yours forever.</p>
+    <div class="btns">
+      <button class="btn-primary">Book a Call →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let W, H, t = 0;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+// Horizontal flowing ribbons — blue silk moving left to right
+const RIBBONS = [
+  { yPos:0.25, amp:0.06, freq:1.1, speed:0.18, color:[0,60,180],   opacity:0.55, thick:0.12 },
+  { yPos:0.40, amp:0.05, freq:0.8, speed:0.14, color:[0,40,140],   opacity:0.50, thick:0.10 },
+  { yPos:0.52, amp:0.07, freq:1.3, speed:0.22, color:[0,80,220],   opacity:0.30, thick:0.08 },
+  { yPos:0.63, amp:0.04, freq:0.9, speed:0.16, color:[0,20,100],   opacity:0.60, thick:0.14 },
+  { yPos:0.75, amp:0.06, freq:1.5, speed:0.25, color:[0,100,255],  opacity:0.18, thick:0.07 },
+  { yPos:0.35, amp:0.03, freq:2.0, speed:0.30, color:[20,120,255], opacity:0.12, thick:0.05 },
+  { yPos:0.58, amp:0.05, freq:0.6, speed:0.12, color:[0,30,120],   opacity:0.45, thick:0.09 },
+];
+
+function drawRibbon(r, offset) {
+  const { yPos, amp, freq, color, opacity, thick } = r;
+  const [rc,g,b] = color;
+  const centerY = H * yPos;
+  const halfH = H * thick;
+
+  ctx.beginPath();
+
+  const STEPS = 200;
+  // Top edge of ribbon
+  for (let i = 0; i <= STEPS; i++) {
+    const x = (i / STEPS) * W;
+    const nx = x / W;
+    const wave = Math.sin(nx * Math.PI * 2 * freq - t * r.speed + offset)
+               + Math.sin(nx * Math.PI * 3.3 * freq - t * r.speed * 0.6 + offset * 1.4) * 0.35
+               + Math.sin(nx * Math.PI * 0.8 * freq - t * r.speed * 1.3 + offset * 0.6) * 0.2;
+    const y = centerY - halfH + wave * H * amp;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  // Bottom edge (reverse)
+  for (let i = STEPS; i >= 0; i--) {
+    const x = (i / STEPS) * W;
+    const nx = x / W;
+    const wave = Math.sin(nx * Math.PI * 2 * freq - t * r.speed + offset)
+               + Math.sin(nx * Math.PI * 3.3 * freq - t * r.speed * 0.6 + offset * 1.4) * 0.35
+               + Math.sin(nx * Math.PI * 0.8 * freq - t * r.speed * 1.3 + offset * 0.6) * 0.2;
+    const y = centerY + halfH + wave * H * amp;
+    ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+
+  // Gradient across the ribbon — bright center, fade edges
+  const grad = ctx.createLinearGradient(0, centerY - halfH, 0, centerY + halfH);
+  grad.addColorStop(0,   `rgba(${rc},${g},${b},0)`);
+  grad.addColorStop(0.3, `rgba(${rc},${g},${b},${opacity * 0.6})`);
+  grad.addColorStop(0.5, `rgba(${rc},${g},${b},${opacity})`);
+  grad.addColorStop(0.7, `rgba(${rc},${g},${b},${opacity * 0.6})`);
+  grad.addColorStop(1,   `rgba(${rc},${g},${b},0)`);
+  ctx.fillStyle = grad;
+  ctx.fill();
+}
+
+function draw() {
+  t += 0.012;
+  ctx.clearRect(0, 0, W, H);
+
+  // Deep background gradient
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#000005');
+  bg.addColorStop(0.5, '#000818');
+  bg.addColorStop(1, '#000005');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Draw horizontal blue ribbons
+  RIBBONS.forEach((r, i) => {
+    drawRibbon(r, i * 1.8);
+  });
+
+  // Subtle top glow — blue
+  const topGlow = ctx.createRadialGradient(W/2, -H*0.1, 0, W/2, -H*0.1, W*0.7);
+  topGlow.addColorStop(0, 'rgba(0,60,180,0.12)');
+  topGlow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = topGlow;
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle center glow — keeps text readable
+  const centerGlow = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W*0.45);
+  centerGlow.addColorStop(0, 'rgba(0,0,0,0.6)');
+  centerGlow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = centerGlow;
+  ctx.fillRect(0, 0, W, H);
+
+  requestAnimationFrame(draw);
+}
+
+window.addEventListener('resize', resize);
+resize();
+draw();
+</script>
+</body>
+</html>

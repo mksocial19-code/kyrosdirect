@@ -9,7 +9,7 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Inter',sans-serif; background:#000005; color:white; }
 
-canvas { position:fixed; inset:0; z-index:0; opacity:1; transition:opacity 0.5s; }
+canvas { display:none; }
 
 nav {
  position:fixed; top:0; left:0; right:0; z-index:20;
@@ -52,8 +52,8 @@ nav {
 .hero::after {
  content:'';
  position:absolute; bottom:0; left:0; right:0;
- height:220px;
- background:linear-gradient(to bottom, transparent, #000005);
+ height:380px;
+ background:linear-gradient(to bottom, transparent 0%, rgba(0,0,5,0.6) 50%, #000005 100%);
  z-index:2; pointer-events:none;
 }
 
@@ -640,18 +640,7 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 });
 } // end canvas block
 
-// Scroll-based: hide canvas when at top (video shows), reveal as you scroll down
-window.addEventListener('scroll', () => {
-  const heroH = window.innerHeight;
-  const scrollY = window.scrollY;
-  const progress = Math.min(scrollY / (heroH * 0.6), 1);
-  canvas.style.opacity = progress;
-  // Also fade out the hero video as you scroll
-  const heroVideo = document.querySelector('.hero video');
-  if (heroVideo) heroVideo.style.opacity = Math.max(0.6 - progress * 0.6, 0);
-});
-// Start with canvas hidden (video shows on load)
-canvas.style.opacity = 0;
+// No crossfade — video hero only, clean dark below
 </script>
 </body>
 </html>
