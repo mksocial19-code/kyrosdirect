@@ -9,7 +9,12 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Inter',sans-serif; background:#000005; color:white; }
 
-canvas { display:none; }
+#wave-bg {
+ position:absolute; inset:0;
+ width:100%; height:100%;
+ z-index:0; pointer-events:none;
+ opacity:0.85;
+}
 
 nav {
  position:fixed; top:0; left:0; right:0; z-index:20;
@@ -155,6 +160,7 @@ section {
  padding:80px 24px;
 }
 .section-inner {
+ position:relative; z-index:1;
  max-width:960px;
  margin:0 auto;
 }
@@ -337,8 +343,6 @@ footer {
 </style>
 </head>
 <body>
-<canvas id="c"></canvas>
-
 <nav>
  <div class="logo"><span class="logo-k">K</span></div>
  <div class="nav-links">
@@ -365,6 +369,7 @@ footer {
 
 <!-- Pricing -->
 <section>
+ <canvas id="c"></canvas>
  <div class="section-inner">
  <div class="pricing-header">
   <div class="section-label">Core Offer</div>
@@ -529,12 +534,14 @@ footer {
 <script>
 const canvas = document.getElementById('c');
 if (canvas) {
+canvas.id = 'wave-bg';
 const ctx = canvas.getContext('2d');
 let W, H, t = 0;
 
 function resize() {
- W = canvas.width = window.innerWidth;
- H = canvas.height = window.innerHeight;
+ const parent = canvas.parentElement;
+ W = canvas.width = parent ? parent.offsetWidth : window.innerWidth;
+ H = canvas.height = parent ? parent.offsetHeight : window.innerHeight;
 }
 
 const RIBBONS = [
@@ -640,7 +647,7 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 });
 } // end canvas block
 
-// No crossfade — video hero only, clean dark below
+// canvas is inside first section — no scroll crossfade needed
 </script>
 </body>
 </html>
