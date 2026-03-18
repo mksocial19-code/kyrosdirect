@@ -217,8 +217,13 @@ section {
  font-size:36px; font-weight:800; letter-spacing:-0.03em; color:white;
 }
 /* Core offer card - bigger */
-.core-card { padding:32px 36px; }
-.core-card .card-price { font-size:52px; }
+.core-card {
+ padding:32px 36px;
+ border:1px solid rgba(0,140,255,0.35) !important;
+ background:linear-gradient(160deg, rgba(0,80,200,0.1) 0%, rgba(0,0,0,0) 60%) !important;
+ box-shadow:0 0 40px rgba(0,100,255,0.08), inset 0 1px 0 rgba(0,150,255,0.15);
+}
+.core-card .card-price { font-size:58px; }
 .core-card .card-name { font-size:20px; }
 .core-card .card-desc { font-size:14px; color:#fff; }
 .core-card .card-features li { font-size:13px; color:#fff; }
@@ -273,7 +278,19 @@ section {
 .addons-stack { display:flex; flex-direction:column; gap:20px; }
 
 /* DGS full-width */
-.dgs-card { margin-top:0; }
+.dgs-card {
+ margin-top:0;
+ border:1px solid rgba(0,140,255,0.35) !important;
+ background:linear-gradient(160deg, rgba(0,80,200,0.1) 0%, rgba(0,0,0,0) 60%) !important;
+ box-shadow:0 0 40px rgba(0,100,255,0.08), inset 0 1px 0 rgba(0,150,255,0.15);
+}
+.most-popular-badge {
+ display:inline-block;
+ font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+ background:linear-gradient(90deg,#0066ff,#00c8ff);
+ color:#fff; padding:4px 12px; border-radius:99px;
+ margin-bottom:12px;
+}
 .dgs-header { text-align:center; margin-bottom:20px; }
 .dgs-grid {
  display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;
@@ -510,6 +527,7 @@ footer {
  <!-- Digital Growth System -->
  <div class="glass-card dgs-card">
   <div class="dgs-header">
+  <div class="most-popular-badge">Most Popular</div>
   <div class="section-label" style="text-align:left;">Digital Growth System</div>
   </div>
   <div class="dgs-grid">
