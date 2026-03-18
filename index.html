@@ -348,6 +348,70 @@ footer {
  .section-headline { font-size:28px; }
  footer { padding:20px; flex-direction:column; gap:8px; text-align:center; }
 }
+/* ── CHECKOUT MODAL ── */
+.co-overlay {
+ display:none; position:fixed; inset:0; z-index:200;
+ background:rgba(0,0,0,0.65); backdrop-filter:blur(8px);
+ align-items:center; justify-content:center; padding:20px;
+}
+.co-overlay.open { display:flex; }
+.co-modal {
+ background:#fff; border-radius:20px;
+ padding:32px 28px 28px; width:100%; max-width:680px;
+ max-height:90vh; overflow-y:auto; position:relative;
+}
+.co-close {
+ position:absolute; top:18px; right:18px;
+ background:#f0f0f0; border:none; border-radius:50%;
+ width:34px; height:34px; font-size:16px; cursor:pointer;
+ color:#666; display:flex; align-items:center; justify-content:center;
+}
+.co-label {
+ font-size:10px; font-weight:700; letter-spacing:0.12em;
+ text-transform:uppercase; color:#0066ff; margin-bottom:10px;
+}
+.co-label span {
+ background:#e8f0ff; padding:2px 6px; border-radius:4px;
+}
+.co-title { font-size:28px; font-weight:800; color:#0a0a0a; letter-spacing:-0.04em; margin-bottom:24px; }
+.co-cards { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:24px; }
+.co-card {
+ border:2px solid #e8e8e8; border-radius:16px;
+ padding:20px 18px; cursor:pointer; transition:border-color 0.2s, background 0.2s;
+ background:#fff;
+}
+.co-card.selected { border-color:#0066ff; background:#f5f8ff; }
+.co-card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+.co-card-price { font-size:22px; font-weight:800; color:#0a0a0a; letter-spacing:-0.04em; }
+.co-card-check {
+ width:22px; height:22px; border-radius:50%;
+ border:2px solid #ccc; flex-shrink:0;
+ display:flex; align-items:center; justify-content:center;
+ transition:border-color 0.2s, background 0.2s;
+}
+.co-card.selected .co-card-check { background:#0066ff; border-color:#0066ff; }
+.co-card.selected .co-card-check::after { content:'✓'; color:#fff; font-size:12px; font-weight:700; }
+.co-card-name { font-size:16px; font-weight:700; color:#0a0a0a; margin-bottom:8px; }
+.co-card-desc { font-size:13px; color:#555; line-height:1.55; margin-bottom:14px; }
+.co-card-features { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.co-card-features li { font-size:12px; color:#333; display:flex; gap:8px; align-items:flex-start; }
+.co-card-features li::before { content:'✓'; color:#0066ff; font-weight:700; font-size:12px; flex-shrink:0; margin-top:1px; }
+.co-footer { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.co-total { font-size:14px; color:#888; }
+.co-total strong { font-size:22px; font-weight:800; color:#0a0a0a; letter-spacing:-0.04em; }
+.co-cta {
+ background:#0066ff; color:#fff; font-size:15px; font-weight:700;
+ padding:14px 28px; border-radius:12px; text-decoration:none;
+ letter-spacing:-0.02em; white-space:nowrap;
+}
+@media (max-width:600px) {
+ .co-cards { grid-template-columns:1fr; }
+ .co-modal { padding:24px 18px 24px; border-radius:20px 20px 0 0; }
+ .co-overlay { align-items:flex-end; padding:0; }
+ .co-title { font-size:22px; }
+ .co-footer { flex-direction:column; align-items:stretch; }
+ .co-cta { text-align:center; }
+}
 </style>
 </head>
 <body>
@@ -724,6 +788,78 @@ window.addEventListener('touchend', function(e) {
     snapTo(heroEl);
   }
 }, { passive: true });
+</script>
+<!-- Checkout Modal -->
+<div class="co-overlay" id="coOverlay">
+ <div class="co-modal">
+  <button class="co-close" id="coClose">✕</button>
+  <div class="co-label">Recommended <span>Add-Ons</span></div>
+  <div class="co-title">Enhance your website</div>
+  <div class="co-cards">
+   <div class="co-card" data-addon="chatbot" data-price="2500">
+    <div class="co-card-header">
+     <div class="co-card-price">+$2,500</div>
+     <div class="co-card-check"></div>
+    </div>
+    <div class="co-card-name">AI Chatbot</div>
+    <div class="co-card-desc">Most prospects don't call. This captures them before they leave — answering questions, collecting their info, and sending you the lead automatically.</div>
+    <ul class="co-card-features">
+     <li>Answers customer questions instantly, 24/7</li>
+     <li>Captures name, number, and service needs automatically</li>
+     <li>Trained on your business — no generic responses</li>
+     <li>New inquiries sent directly to you for fast follow-up</li>
+    </ul>
+   </div>
+   <div class="co-card" data-addon="seo" data-price="2500">
+    <div class="co-card-header">
+     <div class="co-card-price">+$2,500</div>
+     <div class="co-card-check"></div>
+    </div>
+    <div class="co-card-name">Local SEO</div>
+    <div class="co-card-desc">A complete local SEO setup — done once. Get in front of nearby customers before they find your competitors.</div>
+    <ul class="co-card-features">
+     <li>Keyword-targeted pages for your services and location</li>
+     <li>Schema markup and structured data for stronger search visibility</li>
+     <li>Local landing pages to pull in nearby leads</li>
+     <li>On-page and backend SEO to improve indexing and rankings</li>
+    </ul>
+   </div>
+  </div>
+  <div class="co-footer">
+   <div class="co-total">Total: <strong id="coTotal">$5,000</strong> one-time</div>
+   <a href="https://calendly.com/mark-outreach/15" target="_blank" class="co-cta">Book a Call to Get Started</a>
+  </div>
+ </div>
+</div>
+
+<script>
+(function(){
+ const overlay = document.getElementById('coOverlay');
+ const closeBtn = document.getElementById('coClose');
+ let selected = {};
+
+ // Wire Start Checkout button
+ document.querySelectorAll('.card-btn').forEach(btn => {
+  if (btn.textContent.includes('Start Checkout')) {
+   btn.addEventListener('click', e => { e.preventDefault(); overlay.classList.add('open'); });
+  }
+ });
+
+ closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
+ overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+
+ document.querySelectorAll('.co-card').forEach(card => {
+  card.addEventListener('click', function() {
+   const id = this.dataset.addon;
+   const price = parseInt(this.dataset.price);
+   this.classList.toggle('selected');
+   if (this.classList.contains('selected')) selected[id] = price;
+   else delete selected[id];
+   const total = 5000 + Object.values(selected).reduce((a,b) => a+b, 0);
+   document.getElementById('coTotal').textContent = '$' + total.toLocaleString();
+  });
+ });
+})();
 </script>
 </body>
 </html>
