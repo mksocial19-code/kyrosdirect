@@ -681,7 +681,8 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
   function snapTo(el) {
     if (snapping) return;
     snapping = true;
-    const top = el.getBoundingClientRect().top + window.scrollY;
+    const navH = document.querySelector('nav') ? document.querySelector('nav').offsetHeight : 70;
+    const top = el.getBoundingClientRect().top + window.scrollY - navH;
     window.scrollTo({ top: top, behavior: 'smooth' });
     setTimeout(() => { snapping = false; }, 800);
   }
