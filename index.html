@@ -11,15 +11,11 @@
  --surface-deep:#000818;
  --surface-black:#000005;
 }
-html, body {
- height: 100%;
-}
+html, body { height:100%; }
 body {
  font-family:'Inter',sans-serif;
  background:var(--surface-deep);
  color:white;
- overflow-y: scroll;
- scroll-snap-type: y mandatory;
 }
 
 .hero video {
@@ -59,13 +55,13 @@ nav {
 .nav-link:hover { color:white; }
 .nav-link.active { color:white; }
 .nav-cta {
- background:rgba(255,255,255,0.1); color:white; font-size:13px; font-weight:600;
+ background:#ffffff; color:#000000; font-size:13px; font-weight:700;
  padding:8px 18px; border-radius:8px;
- border:1px solid rgba(255,255,255,0.2);
- backdrop-filter:blur(8px); cursor:pointer; font-family:'Inter',sans-serif;
+ border:none;
+ cursor:pointer; font-family:'Inter',sans-serif;
  transition:background 0.2s; text-decoration:none;
 }
-.nav-cta:hover { background:rgba(255,255,255,0.18); }
+.nav-cta:hover { background:rgba(255,255,255,0.88); }
 
 .hero {
  position:relative; width:100vw; height:100vh;
@@ -372,7 +368,7 @@ footer {
  <span class="nav-link">Pricing</span>
  <span class="nav-link">About</span>
  </div>
- <button class="nav-cta">Book a Call →</button>
+ <button class="nav-cta">Book a Call</button>
 </nav>
 
 <div class="hero">
@@ -671,6 +667,48 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 } // end canvas block
 
 // canvas is inside first section — no scroll crossfade needed
+
+// JS snap scroll — hero snaps to first section on any scroll attempt
+(function() {
+  const hero = document.querySelector('.hero');
+  const firstSection = document.querySelector('section');
+  if (!hero || !firstSection) return;
+
+  let snapping = false;
+
+  function snapTo(el) {
+    if (snapping) return;
+    snapping = true;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => { snapping = false; }, 800);
+  }
+
+  window.addEventListener('wheel', function(e) {
+    const scrollY = window.scrollY;
+    const heroH = hero.offsetHeight;
+    // If in hero and scrolling down — snap to first section
+    if (scrollY < heroH * 0.5 && e.deltaY > 0) {
+      e.preventDefault();
+      snapTo(firstSection);
+    }
+    // If in first section near top and scrolling up — snap back to hero
+    if (scrollY >= heroH * 0.5 && scrollY < heroH * 1.5 && e.deltaY < 0) {
+      e.preventDefault();
+      snapTo(hero);
+    }
+  }, { passive: false });
+
+  // Touch support
+  let touchStartY = 0;
+  window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+  window.addEventListener('touchend', function(e) {
+    const delta = touchStartY - e.changedTouches[0].clientY;
+    const scrollY = window.scrollY;
+    const heroH = hero.offsetHeight;
+    if (scrollY < heroH * 0.5 && delta > 30) snapTo(firstSection);
+    if (scrollY >= heroH * 0.5 && scrollY < heroH * 1.5 && delta < -30) snapTo(hero);
+  }, { passive: true });
+})();
 </script>
 </body>
 </html>
