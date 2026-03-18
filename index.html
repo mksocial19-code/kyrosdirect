@@ -9,7 +9,7 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:'Inter',sans-serif; background:#000005; color:white; }
 
-canvas { position:fixed; inset:0; z-index:0; opacity:1; transition:opacity 0.5s; }
+canvas { display:none; }
 
 nav {
  position:fixed; top:0; left:0; right:0; z-index:20;
@@ -36,13 +36,13 @@ nav {
 .nav-link:hover { color:white; }
 .nav-link.active { color:white; }
 .nav-cta {
- background:rgba(255,255,255,0.1); color:white; font-size:13px; font-weight:600;
+ background:#ffffff; color:#000000; font-size:13px; font-weight:700;
  padding:8px 18px; border-radius:8px;
- border:1px solid rgba(255,255,255,0.2);
- backdrop-filter:blur(8px); cursor:pointer; font-family:'Inter',sans-serif;
- transition:background 0.2s; text-decoration:none;
+ border:none;
+ cursor:pointer; font-family:'Inter',sans-serif;
+ transition:opacity 0.2s; text-decoration:none;
 }
-.nav-cta:hover { background:rgba(255,255,255,0.18); }
+.nav-cta:hover { opacity:0.85; }
 
 .hero {
  position:relative; width:100vw; height:100vh;
@@ -342,6 +342,7 @@ footer {
  .sub { font-size:15px; }
  .badges { flex-wrap:wrap; justify-content:center; }
  .pricing-grid { grid-template-columns:1fr; }
+ .addons-column { display:none; }
  .dgs-grid { grid-template-columns:1fr; }
  .contact-grid { grid-template-columns:1fr; }
  .section-headline { font-size:28px; }
@@ -360,12 +361,12 @@ footer {
  <span class="nav-link">Pricing</span>
  <span class="nav-link">About</span>
  </div>
- <button class="nav-cta">Book a Call →</button>
+ <button class="nav-cta">Book a Call</button>
 </nav>
 
 <div class="hero">
  <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.55;">
-   <source src="hero-bg.mp4" type="video/mp4">
+   <source src="starwarp.mp4" type="video/mp4">
  </video>
  <div class="hero-overlay"></div>
  <div class="content" style="position:relative;z-index:2;">
@@ -655,26 +656,74 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 });
 } // end canvas block
 
-// Smooth scroll-based crossfade: video → canvas
+// Crossfade: video fades out as canvas fades in while scrolling
 const heroVideo = document.querySelector('.hero video');
-let canvasOpacity = 0;
-let rafId;
 
 function updateScroll() {
   const heroH = window.innerHeight;
   const scrollY = window.scrollY;
-  // Canvas starts fading in at 30% scroll, fully in at 90%
   const progress = Math.max(0, Math.min((scrollY - heroH * 0.3) / (heroH * 0.6), 1));
-  // Smooth easing
   const eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
   canvas.style.opacity = eased;
-  if (heroVideo) heroVideo.style.opacity = Math.max(0.6 * (1 - eased * 1.2), 0);
+  if (heroVideo) heroVideo.style.opacity = Math.max(0.55 * (1 - eased * 1.2), 0);
 }
 
 window.addEventListener('scroll', updateScroll, { passive: true });
-// Start with canvas hidden
 canvas.style.opacity = 0;
 updateScroll();
+
+// Snap scroll: hero ↔ first section via wheel + touch
+const heroEl = document.querySelector('.hero');
+const firstSection = document.querySelector('section');
+let snapping = false;
+const SNAP_THRESHOLD = 50; // px of scroll delta to trigger snap
+
+function snapTo(target) {
+  if (snapping) return;
+  snapping = true;
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => { snapping = false; }, 800);
+}
+
+window.addEventListener('wheel', function(e) {
+  const scrollY = window.scrollY;
+  const heroH = window.innerHeight;
+  // Only intercept when near the hero/section boundary (within one viewport)
+  if (scrollY > heroH * 1.5) return;
+
+  if (Math.abs(e.deltaY) < SNAP_THRESHOLD) return;
+
+  if (e.deltaY > 0 && scrollY < heroH * 0.5) {
+    // Scrolling down from hero → snap to first section
+    e.preventDefault();
+    snapTo(firstSection);
+  } else if (e.deltaY < 0 && scrollY > 0 && scrollY < heroH * 1.2) {
+    // Scrolling up near top → snap back to hero
+    e.preventDefault();
+    snapTo(heroEl);
+  }
+}, { passive: false });
+
+// Touch support
+let touchStartY = 0;
+window.addEventListener('touchstart', function(e) {
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+window.addEventListener('touchend', function(e) {
+  const scrollY = window.scrollY;
+  const heroH = window.innerHeight;
+  if (scrollY > heroH * 1.5) return;
+
+  const deltaY = touchStartY - e.changedTouches[0].clientY;
+  if (Math.abs(deltaY) < 40) return;
+
+  if (deltaY > 0 && scrollY < heroH * 0.5) {
+    snapTo(firstSection);
+  } else if (deltaY < 0 && scrollY > 0 && scrollY < heroH * 1.2) {
+    snapTo(heroEl);
+  }
+}, { passive: true });
 </script>
 </body>
 </html>
