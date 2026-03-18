@@ -363,6 +363,36 @@ footer {
  .core-card .card-price { font-size:48px; }
  .pricing-header { padding-top:0; margin-bottom:24px; }
  .first-section { padding-top:24px !important; }
+ .addons-column { display:none; }
+ /* Checkout modal */
+ .checkout-overlay {
+  display:none; position:fixed; inset:0; z-index:100;
+  background:rgba(0,0,0,0.7); backdrop-filter:blur(6px);
+  align-items:flex-end; justify-content:center;
+ }
+ .checkout-overlay.open { display:flex; }
+ .checkout-modal {
+  background:#0a0a14; border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px 20px 0 0; padding:28px 20px 40px;
+  width:100%; max-height:85vh; overflow-y:auto;
+ }
+ .checkout-modal h3 { font-size:18px; font-weight:700; margin-bottom:4px; }
+ .checkout-modal .modal-sub { font-size:13px; color:rgba(255,255,255,0.4); margin-bottom:20px; }
+ .modal-addons { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+ .modal-addon-card {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px; padding:16px; cursor:pointer;
+  transition:border-color 0.2s, background 0.2s;
+ }
+ .modal-addon-card.selected {
+  border-color:rgba(0,150,255,0.5); background:rgba(0,100,255,0.08);
+ }
+ .modal-addon-price { font-size:18px; font-weight:800; color:#0099ff; margin-bottom:4px; }
+ .modal-addon-name { font-size:13px; font-weight:700; margin-bottom:6px; }
+ .modal-addon-desc { font-size:11px; color:rgba(255,255,255,0.4); line-height:1.5; }
+ .modal-total { font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:16px; }
+ .modal-total strong { color:white; font-size:20px; }
+ .modal-close-btn { background:none; border:none; color:rgba(255,255,255,0.4); font-size:22px; float:right; cursor:pointer; margin-top:-4px; }
 }
 </style>
 </head>
@@ -719,6 +749,64 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
     if (scrollY < heroH * 0.5 && delta > 30) snapTo(snapTarget);
     if (scrollY >= heroH * 0.5 && scrollY < heroH * 1.5 && delta < -30) snapTo(hero);
   }, { passive: true });
+})();
+</script>
+<!-- Mobile Checkout Modal -->
+<div class="checkout-overlay" id="checkoutModal">
+ <div class="checkout-modal">
+  <button class="modal-close-btn" id="closeModal">✕</button>
+  <h3>Build Your Package</h3>
+  <p class="modal-sub">Select any add-ons below</p>
+  <div class="modal-addons">
+   <div class="modal-addon-card" data-price="2500" id="addon-chatbot">
+    <div class="modal-addon-price">+$2,500</div>
+    <div class="modal-addon-name">AI Chatbot</div>
+    <div class="modal-addon-desc">Captures leads 24/7, answers questions, sends you the inquiry automatically.</div>
+   </div>
+   <div class="modal-addon-card" data-price="2500" id="addon-seo">
+    <div class="modal-addon-price">+$2,500</div>
+    <div class="modal-addon-name">SEO</div>
+    <div class="modal-addon-desc">Keyword pages, local landing pages, schema markup — done once.</div>
+   </div>
+  </div>
+  <div class="modal-total">Total: <strong id="modalTotal">$5,000</strong> one-time</div>
+  <a href="https://calendly.com/mark-outreach/15" target="_blank" class="card-btn" style="display:block;text-align:center;">Book a Call to Get Started</a>
+ </div>
+</div>
+
+<script>
+// Mobile checkout modal
+(function(){
+ const modal = document.getElementById('checkoutModal');
+ const closeBtn = document.getElementById('closeModal');
+ const checkoutBtns = document.querySelectorAll('.card-btn');
+ let selected = new Set();
+
+ // Wire Start Checkout button on mobile
+ checkoutBtns.forEach(btn => {
+  if (btn.textContent.includes('Start Checkout')) {
+   btn.addEventListener('click', function(e) {
+    if (window.innerWidth <= 768) {
+     e.preventDefault();
+     modal.classList.add('open');
+    }
+   });
+  }
+ });
+
+ closeBtn.addEventListener('click', () => modal.classList.remove('open'));
+ modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+
+ document.querySelectorAll('.modal-addon-card').forEach(card => {
+  card.addEventListener('click', function() {
+   this.classList.toggle('selected');
+   const price = parseInt(this.dataset.price);
+   if (this.classList.contains('selected')) selected.add(price);
+   else selected.delete(price);
+   const total = 5000 + Array.from(selected).reduce((a,b) => a+b, 0);
+   document.getElementById('modalTotal').textContent = '$' + total.toLocaleString();
+  });
+ });
 })();
 </script>
 </body>
