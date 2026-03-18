@@ -7,28 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
-:root {
- --surface-deep:#000818;
- --surface-black:#000005;
-}
-html, body { height:100%; }
-body {
- font-family:'Inter',sans-serif;
- background:var(--surface-deep);
- color:white;
-}
+body { font-family:'Inter',sans-serif; background:#000005; color:white; }
 
-.hero video {
- display:block;
-}
-
-#wave-bg {
- position:absolute; inset:-2px 0 0;
- width:100%; height:100%;
- z-index:0; pointer-events:none;
- opacity:0.85;
-}
-.wave-top-fade { display:none; }
+canvas { position:fixed; inset:0; z-index:0; opacity:1; transition:opacity 0.5s; }
 
 nav {
  position:fixed; top:0; left:0; right:0; z-index:20;
@@ -55,30 +36,42 @@ nav {
 .nav-link:hover { color:white; }
 .nav-link.active { color:white; }
 .nav-cta {
- background:#ffffff; color:#000000; font-size:13px; font-weight:700;
+ background:rgba(255,255,255,0.1); color:white; font-size:13px; font-weight:600;
  padding:8px 18px; border-radius:8px;
- border:none;
- cursor:pointer; font-family:'Inter',sans-serif;
+ border:1px solid rgba(255,255,255,0.2);
+ backdrop-filter:blur(8px); cursor:pointer; font-family:'Inter',sans-serif;
  transition:background 0.2s; text-decoration:none;
 }
-.nav-cta:hover { background:rgba(255,255,255,0.88); }
+.nav-cta:hover { background:rgba(255,255,255,0.18); }
 
 .hero {
  position:relative; width:100vw; height:100vh;
  display:flex; flex-direction:column; align-items:center; justify-content:center;
  overflow:hidden;
- scroll-snap-align: start;
+ background:#000005;
+}
+.hero-video {
+ position:absolute; inset:0;
+ width:100%; height:100%;
+ object-fit:cover;
+ z-index:0;
+ opacity:0.55;
+}
+.hero-overlay {
+ position:absolute; inset:0;
+ background:linear-gradient(180deg, rgba(0,0,5,0.3) 0%, rgba(0,0,5,0.5) 60%, rgba(0,0,5,0.95) 100%);
+ z-index:1;
 }
 .hero::after {
  content:'';
  position:absolute; bottom:0; left:0; right:0;
- height:50vh;
- background:linear-gradient(to bottom, transparent 0%, rgba(0,4,18,0.82) 60%, var(--surface-deep) 100%);
+ height:380px;
+ background:linear-gradient(to bottom, transparent 0%, rgba(0,0,5,0.6) 50%, #000005 100%);
  z-index:2; pointer-events:none;
 }
 
 .content {
- position:relative; z-index:10;
+ position:relative; z-index:2;
  display:flex; flex-direction:column; align-items:center; text-align:center;
  padding:0 24px;
 }
@@ -173,11 +166,8 @@ h1 em {
 section {
  position:relative; z-index:10;
  padding:80px 24px;
- margin:0;
- scroll-snap-align: start;
 }
 .section-inner {
- position:relative; z-index:1;
  max-width:960px;
  margin:0 auto;
 }
@@ -348,52 +338,20 @@ footer {
 @media (max-width:768px) {
  nav { padding:14px 20px; }
  .nav-links { display:none; }
- h1 { font-size:clamp(36px,10vw,52px); letter-spacing:-2px; }
- .sub { font-size:15px; max-width:280px; margin:0 auto; }
- .badges { flex-wrap:wrap; justify-content:center; gap:6px; }
- .badge { font-size:11px; padding:5px 12px; }
+ h1 { font-size:44px; letter-spacing:-2px; }
+ .sub { font-size:15px; }
+ .badges { flex-wrap:wrap; justify-content:center; }
  .pricing-grid { grid-template-columns:1fr; }
  .dgs-grid { grid-template-columns:1fr; }
  .contact-grid { grid-template-columns:1fr; }
  .section-headline { font-size:28px; }
- .section-inner { padding:0 4px; }
  footer { padding:20px; flex-direction:column; gap:8px; text-align:center; }
- .card-btn { width:100%; text-align:center; }
- .core-card { padding:28px 24px; }
- .core-card .card-price { font-size:48px; }
- .pricing-header { padding-top:0; margin-bottom:24px; }
- .first-section { padding-top:24px !important; }
- .addons-column { display:none; }
- /* Checkout modal */
- .checkout-overlay {
-  display:none; position:fixed; inset:0; z-index:100;
-  background:rgba(0,0,0,0.6); backdrop-filter:blur(8px);
-  align-items:flex-end; justify-content:center;
- }
- .checkout-overlay.open { display:flex; }
- .checkout-modal {
-  background:#ffffff; border-radius:24px 24px 0 0;
-  padding:32px 24px 48px; width:100%; max-height:90vh; overflow-y:auto;
- }
- .modal-addons { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px; }
- .modal-addon-card {
-  background:#f5f5f7; border:2px solid transparent;
-  border-radius:16px; padding:20px 16px; cursor:pointer;
-  transition:border-color 0.2s, background 0.2s;
- }
- .modal-addon-card.selected {
-  border-color:#0066ff; background:#f0f5ff;
- }
- .modal-addon-price { font-size:20px; font-weight:800; color:#0066ff; margin-bottom:6px; }
- .modal-addon-name { font-size:14px; font-weight:700; color:#0a0a0a; margin-bottom:6px; }
- .modal-addon-desc { font-size:12px; color:rgba(0,0,0,0.45); line-height:1.55; }
- .modal-total { font-size:14px; color:rgba(0,0,0,0.45); margin-bottom:20px; }
- .modal-total strong { color:#0a0a0a; font-size:24px; font-weight:800; letter-spacing:-0.03em; }
- .modal-close-btn { background:none; border:none; color:rgba(0,0,0,0.3); font-size:22px; float:right; cursor:pointer; margin-top:-4px; }
 }
 </style>
 </head>
 <body>
+<canvas id="c"></canvas>
+
 <nav>
  <div class="logo"><span class="logo-k">K</span></div>
  <div class="nav-links">
@@ -402,14 +360,16 @@ footer {
  <span class="nav-link">Pricing</span>
  <span class="nav-link">About</span>
  </div>
- <button class="nav-cta">Book a Call</button>
+ <button class="nav-cta">Book a Call →</button>
 </nav>
 
 <div class="hero">
- <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.6;">
-   <source src="/starwarp.mp4" type="video/mp4">
+ <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.55;">
+   <source src="hero-bg.mp4" type="video/mp4">
  </video>
- <div class="content" style="position:relative;z-index:10;">
+ <div class="hero-overlay"></div>
+ <div class="content" style="position:relative;z-index:2;">
+ <p style="font-size:13px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:16px;">For businesses that run on reputation.</p>
  <h1>Websites That <em>Win</em> You Clients</h1>
  <p class="sub">A custom website built for your business. No templates. No subscriptions. Yours forever.</p>
  <div class="btns">
@@ -419,9 +379,7 @@ footer {
 </div>
 
 <!-- Pricing -->
-<section style="padding-top:60px;" class="first-section">
- <canvas id="c"></canvas>
- <div class="wave-top-fade"></div>
+<section>
  <div class="section-inner">
  <div class="pricing-header">
   <div class="section-label">Core Offer</div>
@@ -586,19 +544,16 @@ footer {
 <script>
 const canvas = document.getElementById('c');
 if (canvas) {
-canvas.id = 'wave-bg';
 const ctx = canvas.getContext('2d');
 let W, H, t = 0;
 
 function resize() {
- const parent = canvas.parentElement;
- const bounds = parent ? parent.getBoundingClientRect() : null;
- W = canvas.width = Math.ceil(bounds ? bounds.width : window.innerWidth);
- H = canvas.height = Math.ceil(bounds ? bounds.height : window.innerHeight);
+ W = canvas.width = window.innerWidth;
+ H = canvas.height = window.innerHeight;
 }
 
 const RIBBONS = [
- { yPos:0.08, amp:0.06, freq:1.1, speed:0.18, color:[0,60,180], opacity:0.55, thick:0.12 },
+ { yPos:0.25, amp:0.06, freq:1.1, speed:0.18, color:[0,60,180], opacity:0.55, thick:0.12 },
  { yPos:0.40, amp:0.05, freq:0.8, speed:0.14, color:[0,40,140], opacity:0.50, thick:0.10 },
  { yPos:0.52, amp:0.07, freq:1.3, speed:0.22, color:[0,80,220], opacity:0.30, thick:0.08 },
  { yPos:0.63, amp:0.04, freq:0.9, speed:0.16, color:[0,20,100], opacity:0.60, thick:0.14 },
@@ -651,9 +606,9 @@ function draw() {
  ctx.clearRect(0, 0, W, H);
 
  const bg = ctx.createLinearGradient(0, 0, 0, H);
- bg.addColorStop(0, '#000818');
- bg.addColorStop(0.5, '#000c20');
- bg.addColorStop(1, '#000818');
+ bg.addColorStop(0, '#000005');
+ bg.addColorStop(0.5, '#000818');
+ bg.addColorStop(1, '#000005');
  ctx.fillStyle = bg;
  ctx.fillRect(0, 0, W, H);
 
@@ -700,110 +655,26 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 });
 } // end canvas block
 
-// canvas is inside first section — no scroll crossfade needed
+// Smooth scroll-based crossfade: video → canvas
+const heroVideo = document.querySelector('.hero video');
+let canvasOpacity = 0;
+let rafId;
 
-// JS snap scroll — hero snaps to first section on any scroll attempt
-(function() {
-  const hero = document.querySelector('.hero');
-  const firstSection = document.querySelector('section');
-  const pricingHeader = document.querySelector('.pricing-header');
-  const snapTarget = pricingHeader || firstSection;
-  if (!hero || !firstSection) return;
+function updateScroll() {
+  const heroH = window.innerHeight;
+  const scrollY = window.scrollY;
+  // Canvas starts fading in at 30% scroll, fully in at 90%
+  const progress = Math.max(0, Math.min((scrollY - heroH * 0.3) / (heroH * 0.6), 1));
+  // Smooth easing
+  const eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+  canvas.style.opacity = eased;
+  if (heroVideo) heroVideo.style.opacity = Math.max(0.6 * (1 - eased * 1.2), 0);
+}
 
-  let snapping = false;
-
-  function snapTo(el) {
-    if (snapping) return;
-    snapping = true;
-    const navH = document.querySelector('nav') ? document.querySelector('nav').offsetHeight : 70;
-    const top = el.getBoundingClientRect().top + window.scrollY - navH - 20;
-    window.scrollTo({ top: top, behavior: 'smooth' });
-    setTimeout(() => { snapping = false; }, 800);
-  }
-
-  window.addEventListener('wheel', function(e) {
-    const scrollY = window.scrollY;
-    const heroH = hero.offsetHeight;
-    // If in hero and scrolling down — snap to first section
-    if (scrollY < heroH * 0.5 && e.deltaY > 0) {
-      e.preventDefault();
-      snapTo(snapTarget);
-    }
-    // If in first section near top and scrolling up — snap back to hero
-    if (scrollY >= heroH * 0.5 && scrollY < heroH * 1.5 && e.deltaY < 0) {
-      e.preventDefault();
-      snapTo(hero);
-    }
-  }, { passive: false });
-
-  // Touch support
-  let touchStartY = 0;
-  window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
-  window.addEventListener('touchend', function(e) {
-    const delta = touchStartY - e.changedTouches[0].clientY;
-    const scrollY = window.scrollY;
-    const heroH = hero.offsetHeight;
-    if (scrollY < heroH * 0.5 && delta > 30) snapTo(snapTarget);
-    if (scrollY >= heroH * 0.5 && scrollY < heroH * 1.5 && delta < -30) snapTo(hero);
-  }, { passive: true });
-})();
-</script>
-<!-- Mobile Checkout Modal -->
-<div class="checkout-overlay" id="checkoutModal">
- <div class="checkout-modal">
-  <button class="modal-close-btn" id="closeModal">✕</button>
-  <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#0066ff;margin-bottom:12px;">Recommended Add-Ons</div>
-  <div class="modal-addons">
-   <div class="modal-addon-card" data-price="2500" id="addon-chatbot">
-    <div class="modal-addon-price">+$2,500</div>
-    <div class="modal-addon-name">AI Chatbot</div>
-    <div class="modal-addon-desc">Captures leads 24/7, answers questions, sends you the inquiry automatically.</div>
-   </div>
-   <div class="modal-addon-card" data-price="2500" id="addon-seo">
-    <div class="modal-addon-price">+$2,500</div>
-    <div class="modal-addon-name">SEO</div>
-    <div class="modal-addon-desc">Keyword pages, local landing pages, schema markup — done once.</div>
-   </div>
-  </div>
-  <div class="modal-total">Total: <strong id="modalTotal">$5,000</strong> <span style="font-size:13px;font-weight:400;">one-time</span></div>
-  <a href="https://calendly.com/mark-outreach/15" target="_blank" style="display:block;text-align:center;background:#0066ff;color:white;font-size:15px;font-weight:700;padding:16px;border-radius:12px;text-decoration:none;letter-spacing:-0.02em;">Book a Call to Get Started</a>
- </div>
-</div>
-
-<script>
-// Mobile checkout modal
-(function(){
- const modal = document.getElementById('checkoutModal');
- const closeBtn = document.getElementById('closeModal');
- const checkoutBtns = document.querySelectorAll('.card-btn');
- let selected = new Set();
-
- // Wire Start Checkout button on mobile
- checkoutBtns.forEach(btn => {
-  if (btn.textContent.includes('Start Checkout')) {
-   btn.addEventListener('click', function(e) {
-    if (window.innerWidth <= 768) {
-     e.preventDefault();
-     modal.classList.add('open');
-    }
-   });
-  }
- });
-
- closeBtn.addEventListener('click', () => modal.classList.remove('open'));
- modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
-
- document.querySelectorAll('.modal-addon-card').forEach(card => {
-  card.addEventListener('click', function() {
-   this.classList.toggle('selected');
-   const price = parseInt(this.dataset.price);
-   if (this.classList.contains('selected')) selected.add(price);
-   else selected.delete(price);
-   const total = 5000 + Array.from(selected).reduce((a,b) => a+b, 0);
-   document.getElementById('modalTotal').textContent = '$' + total.toLocaleString();
-  });
- });
-})();
+window.addEventListener('scroll', updateScroll, { passive: true });
+// Start with canvas hidden
+canvas.style.opacity = 0;
+updateScroll();
 </script>
 </body>
 </html>
