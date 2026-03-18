@@ -367,30 +367,29 @@ footer {
  /* Checkout modal */
  .checkout-overlay {
   display:none; position:fixed; inset:0; z-index:100;
-  background:rgba(0,0,0,0.7); backdrop-filter:blur(6px);
+  background:rgba(0,0,0,0.6); backdrop-filter:blur(8px);
   align-items:flex-end; justify-content:center;
  }
  .checkout-overlay.open { display:flex; }
  .checkout-modal {
-  background:#060612; border:1px solid rgba(255,255,255,0.08);
-  border-radius:20px 20px 0 0; padding:28px 20px 44px;
-  width:100%; max-height:85vh; overflow-y:auto;
+  background:#ffffff; border-radius:24px 24px 0 0;
+  padding:32px 24px 48px; width:100%; max-height:90vh; overflow-y:auto;
  }
- .modal-addons { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+ .modal-addons { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px; }
  .modal-addon-card {
-  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
-  border-radius:12px; padding:16px; cursor:pointer;
+  background:#f5f5f7; border:2px solid transparent;
+  border-radius:16px; padding:20px 16px; cursor:pointer;
   transition:border-color 0.2s, background 0.2s;
  }
  .modal-addon-card.selected {
-  border-color:rgba(0,150,255,0.5); background:rgba(0,100,255,0.08);
+  border-color:#0066ff; background:#f0f5ff;
  }
- .modal-addon-price { font-size:18px; font-weight:800; color:#0099ff; margin-bottom:4px; }
- .modal-addon-name { font-size:13px; font-weight:700; margin-bottom:6px; }
- .modal-addon-desc { font-size:11px; color:rgba(255,255,255,0.4); line-height:1.5; }
- .modal-total { font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:16px; }
- .modal-total strong { color:white; font-size:20px; }
- .modal-close-btn { background:none; border:none; color:rgba(255,255,255,0.4); font-size:22px; float:right; cursor:pointer; margin-top:-4px; }
+ .modal-addon-price { font-size:20px; font-weight:800; color:#0066ff; margin-bottom:6px; }
+ .modal-addon-name { font-size:14px; font-weight:700; color:#0a0a0a; margin-bottom:6px; }
+ .modal-addon-desc { font-size:12px; color:rgba(0,0,0,0.45); line-height:1.55; }
+ .modal-total { font-size:14px; color:rgba(0,0,0,0.45); margin-bottom:20px; }
+ .modal-total strong { color:#0a0a0a; font-size:24px; font-weight:800; letter-spacing:-0.03em; }
+ .modal-close-btn { background:none; border:none; color:rgba(0,0,0,0.3); font-size:22px; float:right; cursor:pointer; margin-top:-4px; }
 }
 </style>
 </head>
@@ -753,7 +752,7 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 <div class="checkout-overlay" id="checkoutModal">
  <div class="checkout-modal">
   <button class="modal-close-btn" id="closeModal">✕</button>
-  <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#0099ff;margin-bottom:8px;">Recommended Add-Ons</div>
+  <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#0066ff;margin-bottom:12px;">Recommended Add-Ons</div>
   <div class="modal-addons">
    <div class="modal-addon-card" data-price="2500" id="addon-chatbot">
     <div class="modal-addon-price">+$2,500</div>
@@ -766,8 +765,8 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
     <div class="modal-addon-desc">Keyword pages, local landing pages, schema markup — done once.</div>
    </div>
   </div>
-  <div class="modal-total">Total: <strong id="modalTotal">$5,000</strong> one-time</div>
-  <a href="https://calendly.com/mark-outreach/15" target="_blank" class="card-btn" style="display:block;text-align:center;">Book a Call to Get Started</a>
+  <div class="modal-total">Total: <strong id="modalTotal">$5,000</strong> <span style="font-size:13px;font-weight:400;">one-time</span></div>
+  <a href="https://calendly.com/mark-outreach/15" target="_blank" style="display:block;text-align:center;background:#0066ff;color:white;font-size:15px;font-weight:700;padding:16px;border-radius:12px;text-decoration:none;letter-spacing:-0.02em;">Book a Call to Get Started</a>
  </div>
 </div>
 
