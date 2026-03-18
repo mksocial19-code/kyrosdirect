@@ -48,30 +48,17 @@ nav {
  position:relative; width:100vw; height:100vh;
  display:flex; flex-direction:column; align-items:center; justify-content:center;
  overflow:hidden;
- background:#000005;
-}
-.hero-video {
- position:absolute; inset:0;
- width:100%; height:100%;
- object-fit:cover;
- z-index:0;
- opacity:0.55;
-}
-.hero-overlay {
- position:absolute; inset:0;
- background:linear-gradient(180deg, rgba(0,0,5,0.3) 0%, rgba(0,0,5,0.5) 60%, rgba(0,0,5,0.95) 100%);
- z-index:1;
 }
 .hero::after {
  content:'';
  position:absolute; bottom:0; left:0; right:0;
- height:380px;
- background:linear-gradient(to bottom, transparent 0%, rgba(0,0,5,0.6) 50%, #000005 100%);
+ height:220px;
+ background:linear-gradient(to bottom, transparent, #000005);
  z-index:2; pointer-events:none;
 }
 
 .content {
- position:relative; z-index:2;
+ position:relative; z-index:10;
  display:flex; flex-direction:column; align-items:center; text-align:center;
  padding:0 24px;
 }
@@ -364,11 +351,10 @@ footer {
 </nav>
 
 <div class="hero">
- <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.55;">
-   <source src="hero-bg.mp4" type="video/mp4">
+ <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.6;">
+   <source src="/starwarp.mp4" type="video/mp4">
  </video>
- <div class="hero-overlay"></div>
- <div class="content" style="position:relative;z-index:2;">
+ <div class="content" style="position:relative;z-index:10;">
  <h1>Websites That <em>Win</em> You Clients</h1>
  <p class="sub">A custom website built for your business. No templates. No subscriptions. Yours forever.</p>
  <div class="btns">
@@ -654,26 +640,18 @@ document.querySelectorAll('.accordion-trigger').forEach(btn => {
 });
 } // end canvas block
 
-// Smooth scroll-based crossfade: video → canvas
-const heroVideo = document.querySelector('.hero video');
-let canvasOpacity = 0;
-let rafId;
-
-function updateScroll() {
+// Scroll-based: hide canvas when at top (video shows), reveal as you scroll down
+window.addEventListener('scroll', () => {
   const heroH = window.innerHeight;
   const scrollY = window.scrollY;
-  // Canvas starts fading in at 30% scroll, fully in at 90%
-  const progress = Math.max(0, Math.min((scrollY - heroH * 0.3) / (heroH * 0.6), 1));
-  // Smooth easing
-  const eased = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
-  canvas.style.opacity = eased;
-  if (heroVideo) heroVideo.style.opacity = Math.max(0.6 * (1 - eased * 1.2), 0);
-}
-
-window.addEventListener('scroll', updateScroll, { passive: true });
-// Start with canvas hidden
+  const progress = Math.min(scrollY / (heroH * 0.6), 1);
+  canvas.style.opacity = progress;
+  // Also fade out the hero video as you scroll
+  const heroVideo = document.querySelector('.hero video');
+  if (heroVideo) heroVideo.style.opacity = Math.max(0.6 - progress * 0.6, 0);
+});
+// Start with canvas hidden (video shows on load)
 canvas.style.opacity = 0;
-updateScroll();
 </script>
 </body>
 </html>
