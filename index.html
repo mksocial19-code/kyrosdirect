@@ -1154,6 +1154,23 @@ window.addEventListener('touchend', function(e) {
  const closeBtn = document.getElementById('coClose');
  let selected = {};
 
+ const LINKS = {
+  '':               'https://buy.stripe.com/7sYeVe1nf40efaWdipbQY01',
+  'chatbot':        'https://buy.stripe.com/4gM5kEc1TgN04wi4LTbQY03',
+  'seo':            'https://buy.stripe.com/00w5kE0jb0O2aUG0vDbQY02',
+  'chatbot+seo':    'https://buy.stripe.com/fZu00k7LD7cq7IufqxbQY04'
+ };
+
+ function getLink() {
+  const keys = Object.keys(selected).sort().join('+');
+  return LINKS[keys] || LINKS[''];
+ }
+
+ function updateCTA() {
+  const cta = document.querySelector('.co-cta');
+  if (cta) cta.href = getLink();
+ }
+
  // Wire Start Checkout button
  document.querySelectorAll('.card-btn').forEach(btn => {
   if (btn.textContent.includes('Start Checkout')) {
@@ -1173,6 +1190,7 @@ window.addEventListener('touchend', function(e) {
    else delete selected[id];
    const total = 5000 + Object.values(selected).reduce((a,b) => a+b, 0);
    document.getElementById('coTotal').textContent = '$' + total.toLocaleString();
+   updateCTA();
   });
  });
 })();
