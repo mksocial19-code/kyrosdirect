@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — Kyros Co</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07050e;
+      --surface: #0f0c1a;
+      --border: rgba(255,255,255,0.07);
+      --text: #e8e4f0;
+      --muted: #8b85a0;
+      --accent: #7c3aed;
+      --accent-light: #a78bfa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 5, 14, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-back {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--text); }
+
+    .page-hero {
+      background: linear-gradient(180deg, rgba(124, 58, 237, 0.08) 0%, transparent 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 40px 48px;
+      text-align: center;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .page-hero p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 40px 100px;
+    }
+
+    .section {
+      margin-bottom: 52px;
+    }
+
+    .section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section p {
+      color: var(--muted);
+      margin-bottom: 14px;
+      font-size: 15px;
+    }
+
+    .section p:last-child { margin-bottom: 0; }
+
+    .section ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 14px;
+    }
+
+    .section ul li {
+      color: var(--muted);
+      font-size: 15px;
+      padding: 6px 0 6px 20px;
+      position: relative;
+    }
+
+    .section ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 15px;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .callout {
+      background: rgba(124, 58, 237, 0.08);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+
+    .callout p {
+      color: var(--text);
+      margin-bottom: 0;
+    }
+
+    /* Package table */
+    .package-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .package-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .package-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .package-card .price {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .package-card p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .contact-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 20px;
+    }
+
+    .contact-block p { margin-bottom: 8px; }
+
+    .contact-block a {
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+
+    .contact-block a:hover { text-decoration: underline; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--accent-light);
+      text-decoration: none;
+      margin: 0 12px;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .page-hero { padding: 48px 20px 36px; }
+      .container { padding: 48px 20px 80px; }
+      .package-grid { grid-template-columns: 1fr; }
+      footer { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-logo">K</a>
+    <a href="/" class="nav-back">← Back to site</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <h1>Terms of Service</h1>
+    <p>Last updated: April 4, 2026</p>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+
+    <div class="callout">
+      <p>Please read these Terms carefully before engaging our services. By proceeding with a purchase, you agree to be bound by these Terms.</p>
+    </div>
+
+    <div class="section">
+      <h2>1. Services</h2>
+      <p>Kyros Co ("we," "us," "our") provides website design, development, and digital services to small and mid-sized businesses. Our current service offerings include:</p>
+      <div class="package-grid">
+        <div class="package-card">
+          <h3>Professional Website</h3>
+          <div class="price">$5,000</div>
+          <p>Custom website design and development. One-time payment.</p>
+        </div>
+        <div class="package-card">
+          <h3>Growth Package</h3>
+          <div class="price">$15,000</div>
+          <p>Website + AI chatbot + local SEO. One-time payment.</p>
+        </div>
+        <div class="package-card">
+          <h3>AI Chatbot Add-On</h3>
+          <div class="price">$2,500</div>
+          <p>Custom AI chat assistant integrated into your site.</p>
+        </div>
+        <div class="package-card">
+          <h3>Local SEO Add-On</h3>
+          <div class="price">$2,500</div>
+          <p>Local search optimization for your business.</p>
+        </div>
+      </div>
+      <p>All prices are one-time fees. We do not charge recurring monthly retainers unless otherwise specified in a separate written agreement.</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Payment Terms</h2>
+      <p>Full payment is required before project delivery. We accept the following payment methods:</p>
+      <ul>
+        <li>ACH bank transfer (preferred) — $5 flat fee, 0.8% capped</li>
+        <li>Credit or debit card — 1.5% processing surcharge applies</li>
+      </ul>
+      <p>Work will not be delivered or transferred until payment has cleared. Invoices are due upon receipt. We reserve the right to pause or cancel work on projects with outstanding balances.</p>
+    </div>
+
+    <div class="section">
+      <h2>3. Project Scope and Revisions</h2>
+      <p>Each project includes two rounds of revisions based on your original brief. A revision is defined as a set of changes communicated in a single feedback session.</p>
+      <p>Additional revisions beyond the included rounds may be scoped and billed separately. Work outside the original project scope (new pages, features, or significant redesigns) constitutes a new engagement and will be quoted accordingly.</p>
+      <p>Revisions must be requested within 30 days of the initial delivery. Requests outside this window may be treated as new work.</p>
+    </div>
+
+    <div class="section">
+      <h2>4. Client Responsibilities</h2>
+      <p>To deliver your project on time, we require the following from you:</p>
+      <ul>
+        <li>Your logo in high-resolution format (PNG or SVG preferred)</li>
+        <li>Any photos you want featured — team photos, work portfolio, location images</li>
+        <li>Access to your domain registrar (GoDaddy, Namecheap, etc.) for DNS configuration</li>
+        <li>Timely feedback within agreed review windows</li>
+      </ul>
+      <p>Project delays caused by delayed client-side materials or approvals are not the responsibility of Kyros Co. Timeline commitments are contingent on receiving required assets within 5 business days of project kickoff.</p>
+    </div>
+
+    <div class="section">
+      <h2>5. Intellectual Property and Ownership</h2>
+      <p>Upon receipt of full payment, you own your website outright — all files, code, and content created for your project. You are free to host it anywhere, modify it, or hand it to another developer.</p>
+      <p>We retain the right to display your completed project in our portfolio unless you request otherwise in writing before project completion.</p>
+      <p>Any third-party assets used (stock photography, licensed fonts, open-source libraries) are subject to their respective licenses, which we will document and provide to you at delivery.</p>
+    </div>
+
+    <div class="section">
+      <h2>6. Hosting and Ongoing Maintenance</h2>
+      <p>Unless otherwise agreed, we do not provide ongoing hosting or maintenance services. Your website will be delivered as a set of files you can deploy to any hosting provider of your choice.</p>
+      <p>We recommend hosting with Cloudflare Pages (free tier) and will provide setup instructions at delivery. Ongoing support, updates, or modifications after project handoff are available as separate engagements.</p>
+    </div>
+
+    <div class="section">
+      <h2>7. Cancellations and Refunds</h2>
+      <p>Cancellation requests made before work has begun will receive a full refund.</p>
+      <p>If work has commenced, refunds will be prorated based on the percentage of work completed at the time of cancellation request. Work completed and delivered is non-refundable.</p>
+      <p>We reserve the right to terminate an engagement if a client is unresponsive for more than 30 consecutive days, in which case any payment received for incomplete work will be retained as compensation for time and resources already committed.</p>
+    </div>
+
+    <div class="section">
+      <h2>8. Limitation of Liability</h2>
+      <p>To the fullest extent permitted by law, Kyros Co's total liability for any claim arising from our services shall not exceed the total amount paid by you for the specific project giving rise to the claim.</p>
+      <p>We are not liable for indirect, incidental, or consequential damages including but not limited to lost revenue, lost business, or reputational harm.</p>
+      <p>We are not responsible for downtime, security incidents, or performance issues arising from third-party hosting providers after project handoff.</p>
+    </div>
+
+    <div class="section">
+      <h2>9. Confidentiality</h2>
+      <p>We treat all client business information as confidential and will not disclose it to third parties without your consent, except as required to deliver the services (e.g., sharing with our development team) or as required by law.</p>
+    </div>
+
+    <div class="section">
+      <h2>10. Governing Law</h2>
+      <p>These Terms are governed by the laws of the State of Wyoming, without regard to its conflict of law provisions. Any disputes arising from these Terms or our services shall be resolved through good-faith negotiation. If negotiation fails, disputes shall be submitted to binding arbitration in accordance with the rules of the American Arbitration Association.</p>
+    </div>
+
+    <div class="section">
+      <h2>11. Changes to These Terms</h2>
+      <p>We may update these Terms periodically. Updated Terms will be posted on this page with a revised date. Continued use of our services after updates are posted constitutes acceptance of the revised Terms.</p>
+    </div>
+
+    <div class="section">
+      <h2>12. Contact</h2>
+      <p>Questions about these Terms or your project agreement:</p>
+      <div class="contact-block">
+        <p><strong style="color:#fff;">Kyros Co</strong></p>
+        <p>Email: <a href="mailto:support@kyrosdirect.com">support@kyrosdirect.com</a></p>
+        <p>Phone: <a href="tel:4643006148">(464) 300-6148</a></p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Kyros Co. All rights reserved. &nbsp;|&nbsp; <a href="/terms.html">Terms of Service</a> &nbsp;|&nbsp; <a href="/privacy.html">Privacy Policy</a></p>
+  </footer>
+
+</body>
+</html>
